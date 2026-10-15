@@ -86,7 +86,7 @@ function initNavigation() {
 
 /* ==========================================================================
    3. WEDDING MUSIC PLAYER (SAVY HENRY - THE BEST PART)
-   Dedicated Play and Pause button controls
+   Soft 20% volume autoplay + dedicated Play and Pause button controls
    ========================================================================== */
 function initAudioPlayer() {
   const toggleBtn = document.getElementById('audioToggleBtn');
@@ -94,6 +94,12 @@ function initAudioPlayer() {
   const tooltip = document.getElementById('audioTooltip');
 
   if (!toggleBtn || !audio) return;
+
+  const TARGET_VOLUME = 0.20; // 20% volume as requested to keep music soft & romantic
+  audio.volume = TARGET_VOLUME;
+
+  let userManuallyPaused = false;
+  let interactionListenersAttached = false;
 
   function updateUI(isPlaying) {
     if (isPlaying) {
@@ -109,15 +115,67 @@ function initAudioPlayer() {
     }
   }
 
+  // Soft fade-in up to 20% so music enters gently without startling guests
+  function startPlaybackWithFade() {
+    if (userManuallyPaused) return;
+    audio.volume = 0.05;
+    audio.play().then(() => {
+      updateUI(true);
+      let vol = 0.05;
+      const fadeTimer = setInterval(() => {
+        vol += 0.025;
+        if (vol >= TARGET_VOLUME) {
+          audio.volume = TARGET_VOLUME;
+          clearInterval(fadeTimer);
+        } else {
+          audio.volume = Math.min(TARGET_VOLUME, vol);
+        }
+      }, 150);
+    }).catch((err) => {
+      console.log('Autoplay waiting for first guest interaction:', err.message);
+      attachFirstInteractionAutoplay();
+    });
+  }
+
+  // Fallback for browsers with strict unmuted autoplay policies:
+  // Starts playback on the first touch, click, scroll, or keypress anywhere on the page
+  function attachFirstInteractionAutoplay() {
+    if (interactionListenersAttached || userManuallyPaused) return;
+    interactionListenersAttached = true;
+
+    const triggerEvents = ['click', 'touchstart', 'scroll', 'keydown'];
+    const handleFirstInteraction = () => {
+      triggerEvents.forEach(evt => window.removeEventListener(evt, handleFirstInteraction, { passive: true }));
+      if (audio.paused && !userManuallyPaused) {
+        startPlaybackWithFade();
+      }
+    };
+
+    triggerEvents.forEach(evt => {
+      window.addEventListener(evt, handleFirstInteraction, { passive: true, once: true });
+    });
+  }
+
+  // Attempt initial soft autoplay as soon as page loads
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    startPlaybackWithFade();
+  } else {
+    document.addEventListener('DOMContentLoaded', startPlaybackWithFade, { once: true });
+  }
+
+  // Toggle button click handler
   toggleBtn.addEventListener('click', () => {
     if (audio.paused) {
+      userManuallyPaused = false;
+      audio.volume = TARGET_VOLUME;
       audio.play().then(() => {
         updateUI(true);
-        showToast('🎵 Playing: Savy Henry – The Best Part');
+        showToast('🎵 Playing: Savy Henry – The Best Part (20% Volume)');
       }).catch((err) => {
-        console.warn('Audio play request notice:', err);
+        console.warn('Play button request notice:', err);
       });
     } else {
+      userManuallyPaused = true;
       audio.pause();
       updateUI(false);
       showToast('⏸ Music Paused');
