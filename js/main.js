@@ -85,92 +85,49 @@ function initNavigation() {
 }
 
 /* ==========================================================================
-   3. AMBIENT ROMANTIC WEDDING AUDIO PLAYER
-   Includes a rich Web Audio API romantic harp/chimes arpeggiator
-   that always plays reliably on any browser without network dependencies!
+   3. WEDDING MUSIC PLAYER (SAVY HENRY - THE BEST PART)
+   Dedicated Play and Pause button controls
    ========================================================================== */
 function initAudioPlayer() {
   const toggleBtn = document.getElementById('audioToggleBtn');
-  const soundWaves = document.querySelector('.sound-waves');
-  const tooltip = document.querySelector('.audio-info-tooltip');
+  const audio = document.getElementById('weddingAudio');
+  const tooltip = document.getElementById('audioTooltip');
 
-  let isPlaying = false;
-  let audioCtx = null;
-  let sequenceInterval = null;
+  if (!toggleBtn || !audio) return;
 
-  // Romantic Pentatonic Chord progression (D major / B minor romantic wedding motif)
-  const notes = [
-    293.66, 369.99, 440.00, 587.33, 739.99, 880.00, // D, F#, A, D5, F#5, A5
-    246.94, 329.63, 392.00, 493.88, 659.25, 783.99, // B, E, G, B4, E5, G5
-    220.00, 277.18, 329.63, 440.00, 554.37, 659.25  // A, C#, E, A4, C#5, E5
-  ];
-
-  function playHarpNote(freq, time) {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, time);
-
-    // Warm soft attack and gentle decay like a concert harp
-    gain.gain.setValueAtTime(0.0001, time);
-    gain.gain.exponentialRampToValueAtTime(0.12, time + 0.04);
-    gain.gain.exponentialRampToValueAtTime(0.0001, time + 2.8);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(time);
-    osc.stop(time + 3.0);
-  }
-
-  function startAmbientMusic() {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!audioCtx) {
-      audioCtx = new AudioContext();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-
-    let step = 0;
-    sequenceInterval = setInterval(() => {
-      const now = audioCtx.currentTime;
-      const noteIdx = (step % notes.length);
-      playHarpNote(notes[noteIdx], now);
-      
-      // Add subtle harmony chime every 2 beats
-      if (step % 2 === 0) {
-        playHarpNote(notes[(noteIdx + 2) % notes.length], now + 0.15);
-      }
-      step++;
-    }, 420);
-  }
-
-  function stopAmbientMusic() {
-    if (sequenceInterval) {
-      clearInterval(sequenceInterval);
-      sequenceInterval = null;
+  function updateUI(isPlaying) {
+    if (isPlaying) {
+      toggleBtn.classList.add('playing');
+      toggleBtn.setAttribute('aria-label', 'Pause Music');
+      toggleBtn.setAttribute('title', 'Pause Music');
+      if (tooltip) tooltip.textContent = 'Pause: Savy Henry – The Best Part';
+    } else {
+      toggleBtn.classList.remove('playing');
+      toggleBtn.setAttribute('aria-label', 'Play Music: Savy Henry - The Best Part');
+      toggleBtn.setAttribute('title', 'Play Music');
+      if (tooltip) tooltip.textContent = 'Play: Savy Henry – The Best Part';
     }
   }
 
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      isPlaying = !isPlaying;
-      if (isPlaying) {
-        startAmbientMusic();
-        toggleBtn.classList.add('playing');
-        if (soundWaves) soundWaves.style.display = 'flex';
-        if (tooltip) tooltip.textContent = 'Ambient Music: Playing';
-      } else {
-        stopAmbientMusic();
-        toggleBtn.classList.remove('playing');
-        if (soundWaves) soundWaves.style.display = 'none';
-        if (tooltip) tooltip.textContent = 'Play Romantic Music';
-      }
-    });
-  }
+  toggleBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        updateUI(true);
+        showToast('🎵 Playing: Savy Henry – The Best Part');
+      }).catch((err) => {
+        console.warn('Audio play request notice:', err);
+      });
+    } else {
+      audio.pause();
+      updateUI(false);
+      showToast('⏸ Music Paused');
+    }
+  });
+
+  // Keep button UI in sync with audio state
+  audio.addEventListener('play', () => updateUI(true));
+  audio.addEventListener('pause', () => updateUI(false));
+  audio.addEventListener('ended', () => updateUI(false));
 }
 
 /* ==========================================================================

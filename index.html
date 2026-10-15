@@ -714,15 +714,25 @@
   </footer>
 
   <!-- ==========================================================================
-       FLOATING AMBIENT AUDIO PLAYER WIDGET
+       FLOATING WEDDING MUSIC PLAYER (SAVY HENRY - THE BEST PART)
+       Play / Pause Button Only
        ========================================================================== -->
-  <div class="floating-audio-widget" aria-label="Background Wedding Music Controls">
-    <div class="audio-info-tooltip">Play Romantic Music</div>
-    <button type="button" class="audio-toggle-btn" id="audioToggleBtn" aria-label="Toggle Ambient Music">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18V5l12-2v13"></path>
-        <circle cx="6" cy="18" r="3"></circle>
-        <circle cx="18" cy="16" r="3"></circle>
+  <audio id="weddingAudio" preload="auto" loop>
+    <source src="Savy%20Henry%20-%20The%20Best%20Part%20(Official%20Video).mp3" type="audio/mpeg">
+    <source src="Savy Henry - The Best Part (Official Video).mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="floating-audio-widget" aria-label="Wedding Music Controls">
+    <div class="audio-info-tooltip" id="audioTooltip">Play: Savy Henry – The Best Part</div>
+    <button type="button" class="audio-toggle-btn" id="audioToggleBtn" aria-label="Play Music: Savy Henry - The Best Part" title="Play / Pause Music">
+      <!-- Play Icon (shown when paused) -->
+      <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <polygon points="6 4 20 12 6 20 6 4"></polygon>
+      </svg>
+      <!-- Pause Icon (shown when playing) -->
+      <svg class="icon-pause" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <rect x="6" y="4" width="4.5" height="16" rx="1.5"></rect>
+        <rect x="13.5" y="4" width="4.5" height="16" rx="1.5"></rect>
       </svg>
     </button>
   </div>
