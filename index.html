@@ -28,6 +28,44 @@
 <body class="olive-textured-canvas">
 
   <!-- ==========================================================================
+       ROYAL "OPEN INVITATION" ENTRANCE SCREEN (AUTO-PLAYS MUSIC ON UNSEAL)
+       ========================================================================== -->
+  <div class="invitation-welcome-overlay" id="invitationWelcomeOverlay" role="dialog" aria-modal="true" aria-label="Wedding Invitation Envelope">
+    <div class="welcome-card-envelope">
+      <div class="welcome-card-inner">
+        <!-- Subtle Monogram Watermark -->
+        <div class="welcome-watermark">C &amp; T</div>
+
+        <div class="welcome-eyebrow">The Wedding Celebration of</div>
+        <h1 class="welcome-couple-names">Chinenye &amp; Tonna</h1>
+        <div class="welcome-date-venue">
+          <span>Sunday, Nov 29, 2026</span>
+          <span class="welcome-dot">✦</span>
+          <span>Abuja, Nigeria</span>
+        </div>
+
+        <!-- Luxury Embossed Wax Seal Button -->
+        <div class="welcome-wax-seal" id="welcomeWaxSeal" role="button" tabindex="0" aria-label="Click to break wax seal and open invitation">
+          <div class="seal-outer-rim"></div>
+          <div class="seal-inner-bevel">
+            <span class="seal-monogram">C | T</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-open-invitation" id="btnOpenInvitation" aria-label="Open Wedding Invitation and Play Music">
+          <svg class="icon-envelope" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>Open Invitation</span>
+        </button>
+
+        <p class="welcome-note">Tap to unfold invitation &amp; play music</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
        HEADER & NAVIGATION
        ========================================================================== -->
   <header class="site-header" id="header">
@@ -536,7 +574,7 @@
         <div class="gifts-mobile-tabs" aria-label="Select Account">
           <button type="button" class="gift-tab-btn active" id="tabBride" data-account="bride">
             <span class="tab-dot rose"></span>
-            The Bride · Chineye
+            The Bride · Chinenye
           </button>
           <button type="button" class="gift-tab-btn" id="tabGroom" data-account="groom">
             <span class="tab-dot gold"></span>
@@ -562,7 +600,7 @@
               </div>
               <div class="account-col-item">
                 <div class="account-label-tiny">Account Name</div>
-                <div class="account-val-main">Igwegbe Chineye</div>
+                <div class="account-val-main">Igwegbe Chinenye</div>
               </div>
             </div>
 
@@ -570,7 +608,7 @@
               <div class="account-label-tiny">Account Number</div>
               <div class="account-number-box">
                 <span class="account-digits" id="brideAccountDigits">1436635989</span>
-                <button type="button" class="btn-copy-account" id="copyBrideAccountBtn" data-target="brideAccountDigits" data-name="Chineye">
+                <button type="button" class="btn-copy-account" id="copyBrideAccountBtn" data-target="brideAccountDigits" data-name="chinenye">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                   Copy Account
                 </button>

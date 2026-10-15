@@ -85,13 +85,16 @@ function initNavigation() {
 }
 
 /* ==========================================================================
-   3. WEDDING MUSIC PLAYER (SAVY HENRY - THE BEST PART)
+   3. WEDDING MUSIC PLAYER (SAVY HENRY - THE BEST PART) & OPEN INVITATION SCREEN
    Soft 20% volume autoplay + dedicated Play and Pause button controls
    ========================================================================== */
 function initAudioPlayer() {
   const toggleBtn = document.getElementById('audioToggleBtn');
   const audio = document.getElementById('weddingAudio');
   const tooltip = document.getElementById('audioTooltip');
+  const welcomeOverlay = document.getElementById('invitationWelcomeOverlay');
+  const btnOpenInvitation = document.getElementById('btnOpenInvitation');
+  const welcomeWaxSeal = document.getElementById('welcomeWaxSeal');
 
   if (!toggleBtn || !audio) return;
 
@@ -99,7 +102,7 @@ function initAudioPlayer() {
   audio.volume = TARGET_VOLUME;
 
   let userManuallyPaused = false;
-  let interactionListenersAttached = false;
+  let hasOpenedInvitation = false;
 
   function updateUI(isPlaying) {
     if (isPlaying) {
@@ -132,31 +135,43 @@ function initAudioPlayer() {
         }
       }, 150);
     }).catch((err) => {
-      console.log('Autoplay waiting for first guest interaction:', err.message);
-      attachFirstInteractionAutoplay();
+      console.log('Autoplay ready on unseal:', err.message);
     });
   }
 
-  // Fallback for browsers with strict unmuted autoplay policies:
-  // Starts playback on the first touch, click, scroll, or keypress anywhere on the page
-  function attachFirstInteractionAutoplay() {
-    if (interactionListenersAttached || userManuallyPaused) return;
-    interactionListenersAttached = true;
+  // Handle Opening the Royal Invitation Envelope
+  function openInvitation() {
+    if (hasOpenedInvitation) return;
+    hasOpenedInvitation = true;
 
-    const triggerEvents = ['click', 'touchstart', 'scroll', 'keydown'];
-    const handleFirstInteraction = () => {
-      triggerEvents.forEach(evt => window.removeEventListener(evt, handleFirstInteraction, { passive: true }));
-      if (audio.paused && !userManuallyPaused) {
-        startPlaybackWithFade();
+    // Immediately trigger playback synchronously inside the user's tap gesture
+    userManuallyPaused = false;
+    startPlaybackWithFade();
+
+    if (welcomeOverlay) {
+      welcomeOverlay.classList.add('opened');
+      showToast('🎵 Playing: Savy Henry – The Best Part');
+      setTimeout(() => {
+        welcomeOverlay.style.display = 'none';
+      }, 900);
+    }
+  }
+
+  if (btnOpenInvitation) {
+    btnOpenInvitation.addEventListener('click', openInvitation);
+  }
+
+  if (welcomeWaxSeal) {
+    welcomeWaxSeal.addEventListener('click', openInvitation);
+    welcomeWaxSeal.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openInvitation();
       }
-    };
-
-    triggerEvents.forEach(evt => {
-      window.addEventListener(evt, handleFirstInteraction, { passive: true, once: true });
     });
   }
 
-  // Attempt initial soft autoplay as soon as page loads
+  // Attempt initial soft autoplay as soon as page loads (for browsers that permit it)
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     startPlaybackWithFade();
   } else {
