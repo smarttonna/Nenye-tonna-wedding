@@ -447,12 +447,14 @@ END:VCALENDAR`;
    8. LIGHTBOX MODAL FOR PHYSICAL CARD PREVIEW
    ========================================================================== */
 function initLightbox() {
-  const trigger = document.getElementById('openCardModalBtn');
-  const triggerAlt = document.getElementById('openCardModalBtn2');
   const modal = document.getElementById('cardModalLightbox');
   const closeBtn = document.getElementById('closeModalBtn');
 
-  function openModal() {
+  function openModal(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (modal) {
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -466,13 +468,37 @@ function initLightbox() {
     }
   }
 
-  if (trigger) trigger.addEventListener('click', openModal);
-  if (triggerAlt) triggerAlt.addEventListener('click', openModal);
+  // All triggers that open the original physical card preview
+  const triggerSelectors = [
+    '#cardShowcaseTrigger',
+    '#storyPreviewBadge',
+    '.story-preview-badge',
+    '.story-iv-preview',
+    '#openCardModalBtn',
+    '#openCardModalBtn2'
+  ];
+
+  triggerSelectors.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', openModal);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(e);
+        }
+      });
+    });
+  });
+
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
   if (modal) {
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
+      // Close when clicking outside the content image
+      if (e.target === modal || e.target.classList.contains('card-modal-lightbox')) {
+        closeModal();
+      }
     });
   }
 

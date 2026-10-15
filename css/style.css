@@ -912,16 +912,30 @@ img {
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(36, 46, 20, 0.85);
+  background: rgba(36, 46, 20, 0.9);
   backdrop-filter: blur(8px);
   color: var(--gold-light);
-  padding: 0.55rem 1.4rem;
+  padding: 0.6rem 1.45rem;
   border-radius: 50px;
   font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  font-family: var(--font-sans);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  border: 1px solid rgba(212, 175, 55, 0.45);
   white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.story-iv-preview:hover .story-preview-badge,
+.story-preview-badge:hover {
+  background: rgba(45, 58, 26, 0.98);
+  color: #FFFFFF;
+  border-color: var(--gold-light);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45);
+  transform: translateX(-50%) scale(1.05);
 }
 
 .story-text-content {
