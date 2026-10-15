@@ -1672,7 +1672,39 @@ img {
 .contact-phone-text {
   font-size: 1.05rem;
   color: var(--deep-olive);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.contact-phone-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-family: var(--font-sans);
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--deep-olive-espresso);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.65rem;
+  text-decoration: none;
+  padding: 0.65rem 1.4rem;
+  border-radius: 50px;
+  background: rgba(85, 107, 47, 0.09);
+  border: 1px solid rgba(85, 107, 47, 0.22);
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.contact-phone-link:hover {
+  background: rgba(85, 107, 47, 0.18);
+  color: #1a240c;
+  border-color: var(--gold-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.25);
+}
+
+.contact-phone-link svg {
+  color: var(--deep-olive);
 }
 
 .btn-whatsapp-chat {
@@ -2640,6 +2672,12 @@ img {
 
   .contact-phone-text {
     font-size: 0.95rem;
+  }
+
+  .contact-phone-link {
+    font-size: 1.05rem;
+    padding: 0.6rem 1.2rem;
+    margin-bottom: 1.25rem;
   }
 
   .btn-whatsapp-chat {
