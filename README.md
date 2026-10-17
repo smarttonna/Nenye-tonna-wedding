@@ -5,7 +5,7 @@ A luxury, bespoke digital wedding invitation and event hub celebrating the Holy 
 ## 📅 Event Information
 * **Date**: Sunday, November 29, 2026
 * **Time**: 12:00 PM Prompt
-* **Location**: Abuja, Nigeria
+* **Location**: Cottage One, Garki, Abuja (2FMM+3GV, Tafawa Balewa Way, Garki, Abuja 900103, FCT, Nigeria)
 * **Admission**: Strictly By Invitation (Admit 1 per card)
 * **Children Policy**: No Kids Please
 * **Colours of the Day**:

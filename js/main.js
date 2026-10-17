@@ -407,7 +407,7 @@ function launchConfetti() {
 window.addToGoogleCalendar = function() {
   const title = encodeURIComponent("Chinenye & Tonna's Wedding");
   const details = encodeURIComponent("The Holy Matrimony of Chinenye & Tonna. The Families of Amazu & Igwegbe invite you. Strictly By Invitation. Kindly Note: No Kids Please. Colour of the Day: Rose Pink & Deep Olive.");
-  const location = encodeURIComponent("Abuja, Nigeria");
+  const location = encodeURIComponent("Cottage One, 2FMM+3GV, Tafawa Balewa Way, Garki, Abuja 900103, Federal Capital Territory, Nigeria");
   // November 29, 2026, 12:00 PM WAT is 11:00 AM UTC
   const startTime = "20261129T110000Z";
   const endTime = "20261129T180000Z";
@@ -426,7 +426,7 @@ METHOD:PUBLISH
 BEGIN:VEVENT
 SUMMARY:Chinenye & Tonna's Wedding
 DESCRIPTION:The Holy Matrimony of Chinenye & Tonna. The Families of Amazu & Igwegbe invite you. Strictly By Invitation. Kindly Note: No Kids Please. Colour of the Day: Rose Pink & Deep Olive.
-LOCATION:Abuja, Nigeria
+LOCATION:Cottage One\\, 2FMM+3GV\\, Tafawa Balewa Way\\, Garki\\, Abuja 900103\\, Federal Capital Territory\\, Nigeria
 DTSTART:20261129T110000Z
 DTEND:20261129T180000Z
 STATUS:CONFIRMED
